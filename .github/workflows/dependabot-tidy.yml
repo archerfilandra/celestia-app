@@ -56,8 +56,7 @@ jobs:
           git push origin "${TIDY_BRANCH}"
 
           TITLE="chore(tidy): follow-up for #${{ github.event.pull_request.number }}"
-          BODY="This PR contains go mod tidy changes produced on top of the Dependabot update.\n\nNotes:\n- Created from a separate auxiliary branch to keep the Dependabot branch untouched.\n- Keeps @dependabot rebase available on the original PR."
-
+          BODY=$'This PR contains go mod tidy changes produced on top of the Dependabot update.\n\nNotes:\n- Created from a separate auxiliary branch to keep the Dependabot branch untouched.\n- Keeps @dependabot rebase available on the original PR.'
           echo "Opening follow-up PR from ${TIDY_BRANCH} into ${BASE_BRANCH}"
           PR_CREATE_PAYLOAD=$(jq -n --arg title "$TITLE" --arg head "$TIDY_BRANCH" --arg base "$BASE_BRANCH" --arg body "$BODY" '{title:$title, head:$head, base:$base, body:$body}')
           PR_RESPONSE=$(curl -sS -X POST \
